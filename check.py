@@ -43,6 +43,7 @@ def check_price(displayed_price, s):
     discount = False
 
     total = 0
+    prime = 0
 
     try:
         bracketsOptions = re.findall(r'\[(.*?)\]', s)
@@ -72,11 +73,14 @@ def check_price(displayed_price, s):
                     short_names_to_normal_prices.get(item) if delivery is False else short_names_to_delivery_prices.get(
                         item))
                 total += price
+                prime += 5
     except:
-        return False
+        return {"value": False, "prime": 0}
 
 
     if int(displayed_price) == (int(total + int(tip)) if discount is False else int(int(total + int(tip)) * 0.9)):
-        return True
+        if tip != 0:
+            prime += int(tip * 0.75)
+        return {"value": True, "prime": prime}
     else:
-        return False
+        return {"value": False, "prime": 0}

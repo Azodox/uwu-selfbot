@@ -2,10 +2,15 @@ import discum
 import check
 
 primes = {}
-bot = discum.Client(token=input("Entrez votre token Discord : "))
+bot = discum.Client(token=input("Entrez votre token : "))
+end = input("Entrez l'id de la première facture : ")
+start = input("Entrez l'id de la dernière facture : ")
+billings = []
 
+automaticallyAdd = False
 for message in bot.getMessages("962296635642220597", 100).json():
     embeds = message['embeds']
+
     for embed in embeds:
         if embed['title'] != "Facture payée":
             break
@@ -28,10 +33,29 @@ for message in bot.getMessages("962296635642220597", 100).json():
         if id == "" or author == "" or price == "" or description == "":
             break
 
-        if check.check_price(price, description) is True:
-            if primes.get(author) is None:
-                primes.__setitem__(author, int(price))
-            else:
-                primes[author] += int(price)
+        if id == start:
+            billings.append({"id": id, "author": author, "price": price, "description": description})
+            automaticallyAdd = True
+
+        if automaticallyAdd is True:
+            billings.append({"id": id, "author": author, "price": price, "description": description})
+
+        if id == end:
+            billings.append({"id": id, "author": author, "price": price, "description": description})
+            automaticallyAdd = False
+
+
+for billing in billings:
+    id = billing['id']
+    author = billing['author']
+    price = int(billing['price'])
+    description = billing['description']
+
+    result = check.check_price(price, description)
+    if result['value'] is True:
+        if primes.get(author) is None:
+            primes.__setitem__(author, result['prime'])
+        else:
+            primes[author] += result['prime']
 
 print(primes)
