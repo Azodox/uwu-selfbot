@@ -1,14 +1,18 @@
 import discum
 import check
+import json
+
+with open('config.json') as config_file:
+    options = json.load(config_file)
 
 primes = {}
-bot = discum.Client(token=input("Entrez votre token : "))
+bot = discum.Client(token=options['token'])
 end = input("Entrez l'id de la première facture : ")
 start = input("Entrez l'id de la dernière facture : ")
 billings = []
 
 automaticallyAdd = False
-for message in bot.getMessages("962296635642220597", 100).json():
+for message in bot.getMessages(options['channelID'], 100).json():
     embeds = message['embeds']
 
     for embed in embeds:
