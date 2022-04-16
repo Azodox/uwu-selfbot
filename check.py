@@ -63,6 +63,7 @@ async def check_price(displayed_price: int, s: str):
 
     print("Discount: " + str(discount))
     print("Delivery: " + str(delivery))
+    print("Tip: " + str(tip))
     regex = r"(.*?){}".format(r"\(" if tip != 0 else "")
     content = re.search(regex, s).group(1) if regex != "(.*?)" else s
     split = re.split(r"([0-9]+)([a-z]+)", content.lower().replace(" ", ""))
