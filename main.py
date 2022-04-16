@@ -129,8 +129,8 @@ async def main():
                 logging.debug("Bill " + id + " is not valid.")
                 skipped_bills_amount += 1
 
-    logging.log("Factures non valides : " + str(skipped_bills_amount))
-    logging.log("Primes : " + str(bonus))
+    logging.info("Factures non valides : " + str(skipped_bills_amount))
+    logging.info(msg="Primes : " + str(bonus))
     exit()
 
 
