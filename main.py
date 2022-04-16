@@ -21,6 +21,7 @@ async def main():
         print("Channel not found")
         return
 
+    skipped_bills_amount = 0
     if input("Voulez-vous vérifier une facture en particulier ? (o/n) ") == "o":
         messageID = input("Entrez l'id du message contenant la facture : ")
         message = await channel.fetch_message(messageID)
@@ -60,6 +61,7 @@ async def main():
                     bonus[author] += result['prime']
             else:
                 print("Bill " + id + " is not valid.")
+                skipped_bills_amount += 1
     else:
         end = input("Entrez l'id de la première facture : ")
         start = input("Entrez l'id de la dernière facture : ")
@@ -120,7 +122,9 @@ async def main():
                     bonus[author] += result['prime']
             else:
                 print("Bill " + id + " is not valid.")
+                skipped_bills_amount += 1
 
+    print("Factures non valides : " + str(skipped_bills_amount))
     print("Primes : " + str(bonus))
 
 
