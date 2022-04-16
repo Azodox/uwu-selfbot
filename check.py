@@ -61,9 +61,6 @@ async def check_price(displayed_price: int, s: str):
     if discount is True or delivery is True:
         s = s.split("]")[2 if discount is True and delivery is True else 1]
 
-    print("Discount: " + str(discount))
-    print("Delivery: " + str(delivery))
-    print("Tip: " + str(tip))
     regex = r"(.*?){}".format(r"\(" if tip != 0 else "")
     content = re.search(regex, s).group(1) if regex != "(.*?)" else s
     split = re.split(r"([0-9]+)([a-z]+)", content.lower().replace(" ", ""))
@@ -77,7 +74,7 @@ async def check_price(displayed_price: int, s: str):
                 total_price = amount * int(short_names_to_normal_prices.get(item) if delivery is False else int(short_names_to_delivery_prices.get(item)))
                 total += total_price
                 prime += 5 * amount
-    except Exception as e:
+    except:
         print("Found a bill with invalid declaration, skipping...")
         return {"value": False, "prime": 0}
 
