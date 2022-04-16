@@ -132,8 +132,8 @@ async def main():
                 non_valid_bills.append(id)
 
     print("----------------------------------------------------")
-    print()
-    print("Factures non valides : " + str(len(non_valid_bills)))
+    print("Factures non valides : " + str(non_valid_bills))
+    print("Nombre de factures non valides : " + str(len(non_valid_bills)))
     print("Primes : " + str(bonus))
     print("----------------------------------------------------")
 
