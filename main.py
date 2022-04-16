@@ -131,7 +131,6 @@ async def main():
 
     logging.info("Factures non valides : " + str(skipped_bills_amount))
     logging.info(msg="Primes : " + str(bonus))
-    exit()
 
 
 class Client(discord.Client):
