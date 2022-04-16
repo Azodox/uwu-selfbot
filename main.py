@@ -2,7 +2,7 @@ import check
 import json
 import discord
 import logging
-
+from art import *
 
 with open('config.json') as config_file:
     options = json.load(config_file)
@@ -26,7 +26,9 @@ async def main():
         logging.error("Channel not found")
         exit(1)
 
-    skipped_bills_amount = 0
+    print(text2art("HI BOSS", font="big"))
+
+    non_valid_bills = []
     if input("Voulez-vous vérifier une facture en particulier ? (o/n) ") == "o":
         messageID = input("Entrez l'id du message contenant la facture : ")
         message = await channel.fetch_message(messageID)
@@ -66,7 +68,7 @@ async def main():
                     bonus[author] += result['prime']
             else:
                 print("Bill " + id + " is not valid.")
-                skipped_bills_amount += 1
+                non_valid_bills.append(id)
     else:
         end = input("Entrez l'id de la première facture : ")
         start = input("Entrez l'id de la dernière facture : ")
@@ -127,10 +129,13 @@ async def main():
                     bonus[author] += result['prime']
             else:
                 print("Bill " + id + " is not valid.")
-                skipped_bills_amount += 1
+                non_valid_bills.append(id)
 
-    print("Factures non valides : " + str(skipped_bills_amount))
+    print("----------------------------------------------------")
+    print()
+    print("Factures non valides : " + str(len(non_valid_bills)))
     print("Primes : " + str(bonus))
+    print("----------------------------------------------------")
 
 
 class Client(discord.Client):
