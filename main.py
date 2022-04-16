@@ -52,20 +52,20 @@ async def main():
                     description = fields[1]
 
             if id == "" or author == "" or price == "" or description == "":
-                logging.debug("The bill is not well formatted, skipping...")
+                print("The bill is not well formatted, skipping...")
                 break
 
-            logging.debug("Bill found : " + id)
+            print("Bill found : " + id)
             result = await check.check_price(int(price), description)
 
             if result['value'] is True:
-                logging.debug("Bill " + id + " is valid.")
+                print("Bill " + id + " is valid.")
                 if bonus.get(author) is None:
                     bonus.__setitem__(author, result['prime'])
                 else:
                     bonus[author] += result['prime']
             else:
-                logging.debug("Bill " + id + " is not valid.")
+                print("Bill " + id + " is not valid.")
                 skipped_bills_amount += 1
     else:
         end = input("Entrez l'id de la première facture : ")
@@ -76,7 +76,7 @@ async def main():
         async for message in channel.history(limit=int(input("Combien de messages de facture avez-vous besoin de récupérer ? "))):
             for embed in message.embeds:
                 if embed.title != "Facture payée":
-                    logging.debug("Found a non-paid bill, skipping...")
+                    print("Found a non-paid bill, skipping...")
                     break
 
                 id = ""
@@ -95,20 +95,20 @@ async def main():
                         description = fields[1]
 
                 if id == "" or author == "" or price == "" or description == "":
-                    logging.debug("Found a bill with missing fields, skipping...")
+                    print("Found a bill with missing fields, skipping...")
                     break
 
                 if id == start:
-                    logging.debug("Found the first bill.")
+                    print("Found the first bill.")
                     bills.append({"id": id, "author": author, "price": price, "description": description})
                     automatically_add = True
 
                 if automatically_add is True:
-                    logging.debug("Adding bill " + id + " to the list.")
+                    print("Adding bill " + id + " to the list.")
                     bills.append({"id": id, "author": author, "price": price, "description": description})
 
                 if id == end:
-                    logging.debug("Found the last bill.")
+                    print("Found the last bill.")
                     bills.append({"id": id, "author": author, "price": price, "description": description})
                     automatically_add = False
 
@@ -120,17 +120,17 @@ async def main():
 
             result = await check.check_price(price, description)
             if result['value'] is True:
-                logging.debug("Bill " + id + " is valid.")
+                print("Bill " + id + " is valid.")
                 if bonus.get(author) is None:
                     bonus.__setitem__(author, result['prime'])
                 else:
                     bonus[author] += result['prime']
             else:
-                logging.debug("Bill " + id + " is not valid.")
+                print("Bill " + id + " is not valid.")
                 skipped_bills_amount += 1
 
-    logging.info("Factures non valides : " + str(skipped_bills_amount))
-    logging.info(msg="Primes : " + str(bonus))
+    print("Factures non valides : " + str(skipped_bills_amount))
+    print("Primes : " + str(bonus))
 
 
 class Client(discord.Client):
