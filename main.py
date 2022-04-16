@@ -1,65 +1,134 @@
-import discum
 import check
 import json
+import discord
+
 
 with open('config.json') as config_file:
     options = json.load(config_file)
 
-primes = {}
-bot = discum.Client(token=options['token'])
-end = input("Entrez l'id de la première facture : ")
-start = input("Entrez l'id de la dernière facture : ")
-billings = []
 
-automaticallyAdd = False
-for message in bot.getMessages(options['channelID'], 100).json():
-    embeds = message['embeds']
+async def main():
+    bonus = {}
 
-    for embed in embeds:
-        if embed['title'] != "Facture payée":
-            break
+    guild = await client.fetch_guild(options['guildID'])
+    channel = None
 
-        id = ""
-        author = ""
-        price = ""
-        description = ""
-        for fieldsList in embed['description'].split("\n"):
-            fields = fieldsList.split(": ")
-            if fields[0] == "Facture ID":
-                id = fields[1]
-            elif fields[0] == "Auteur":
-                author = fields[1]
-            elif fields[0] == "Prix":
-                price = fields[1]
-            elif fields[0] == "Description":
-                description = fields[1]
+    for ch in await guild.fetch_channels():
+        if ch.id == int(options['channelID']):
+            channel = ch
 
-        if id == "" or author == "" or price == "" or description == "":
-            break
+    if channel is None:
+        print("Channel not found")
+        return
 
-        if id == start:
-            billings.append({"id": id, "author": author, "price": price, "description": description})
-            automaticallyAdd = True
+    if input("Voulez-vous vérifier une facture en particulier ? (o/n) ") == "o":
+        messageID = input("Entrez l'id du message contenant la facture : ")
+        message = await channel.fetch_message(messageID)
 
-        if automaticallyAdd is True:
-            billings.append({"id": id, "author": author, "price": price, "description": description})
+        for embed in message.embeds:
+            if embed.title != "Facture payée":
+                print("This message is not a bill")
+                break
 
-        if id == end:
-            billings.append({"id": id, "author": author, "price": price, "description": description})
-            automaticallyAdd = False
+            id = ""
+            author = ""
+            price = ""
+            description = ""
+            for fieldsList in embed.description.split("\n"):
+                fields = fieldsList.split(": ") if not None else fieldsList.split(" -> ")
+                if str(fields[0]) == "Facture ID":
+                    id = fields[1]
+                elif str(fields[0].replace(" ", "")) == "Auteur":
+                    author = fields[1]
+                elif str(fields[0].replace(" ", "")) == "Prix":
+                    price = fields[1]
+                elif str(fields[0].replace(" ", "")) == "Description":
+                    description = fields[1]
+
+            if id == "" or author == "" or price == "" or description == "":
+                print("The bill is not well formatted, skipping...")
+                break
+
+            print("Bill found : " + id)
+            result = await check.check_price(int(price), description)
+
+            if result['value'] is True:
+                print("Bill " + id + " is valid.")
+                if bonus.get(author) is None:
+                    bonus.__setitem__(author, result['prime'])
+                else:
+                    bonus[author] += result['prime']
+            else:
+                print("Bill " + id + " is not valid.")
+    else:
+        end = input("Entrez l'id de la première facture : ")
+        start = input("Entrez l'id de la dernière facture : ")
+
+        bills = []
+        automatically_add = False
+        async for message in channel.history(limit=int(input("Combien de messages de facture avez-vous besoin de récupérer ? "))):
+            for embed in message.embeds:
+                if embed.title != "Facture payée":
+                    print("Found a non-paid bill, skipping...")
+                    break
+
+                id = ""
+                author = ""
+                price = ""
+                description = ""
+                for fieldsList in embed.description.split("\n"):
+                    fields = fieldsList.split(": ") if not None else fieldsList.split(" -> ")
+                    if str(fields[0]) == "Facture ID":
+                        id = fields[1]
+                    elif str(fields[0].replace(" ", "")) == "Auteur":
+                        author = fields[1]
+                    elif str(fields[0].replace(" ", "")) == "Prix":
+                        price = fields[1]
+                    elif str(fields[0].replace(" ", "")) == "Description":
+                        description = fields[1]
+
+                if id == "" or author == "" or price == "" or description == "":
+                    print("Found a bill with missing fields, skipping...")
+                    break
+
+                if id == start:
+                    print("Found the first bill.")
+                    bills.append({"id": id, "author": author, "price": price, "description": description})
+                    automatically_add = True
+
+                if automatically_add is True:
+                    print("Adding bill " + id + " to the list.")
+                    bills.append({"id": id, "author": author, "price": price, "description": description})
+
+                if id == end:
+                    print("Found the last bill.")
+                    bills.append({"id": id, "author": author, "price": price, "description": description})
+                    automatically_add = False
+
+        for bill in bills:
+            id = bill['id']
+            author = bill['author']
+            price = int(bill['price'])
+            description = bill['description']
+
+            result = await check.check_price(price, description)
+            if result['value'] is True:
+                print("Bill " + id + " is valid.")
+                if bonus.get(author) is None:
+                    bonus.__setitem__(author, result['prime'])
+                else:
+                    bonus[author] += result['prime']
+            else:
+                print("Bill " + id + " is not valid.")
+
+    print("Primes : " + str(bonus))
 
 
-for billing in billings:
-    id = billing['id']
-    author = billing['author']
-    price = int(billing['price'])
-    description = billing['description']
+class Client(discord.Client):
+    async def on_ready(self):
+        print('Logged in as', self.user)
+        await main()
 
-    result = check.check_price(price, description)
-    if result['value'] is True:
-        if primes.get(author) is None:
-            primes.__setitem__(author, result['prime'])
-        else:
-            primes[author] += result['prime']
 
-print(primes)
+client = Client()
+client.run(options['token'])
