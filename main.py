@@ -74,6 +74,7 @@ async def main():
         start = input("Entrez l'id de la dernière facture : ")
 
         bills = []
+        bills_done_ids = []
         automatically_add = False
         async for message in channel.history(limit=int(input("Combien de messages de facture avez-vous besoin de récupérer ? "))):
             for embed in message.embeds:
@@ -103,15 +104,18 @@ async def main():
                 if id == start:
                     print("Found the first bill.")
                     bills.append({"id": id, "author": author, "price": price, "description": description})
+                    bills_done_ids.append(id)
                     automatically_add = True
 
-                if automatically_add is True:
+                if automatically_add is True and bills_done_ids.__contains__(id) is False:
                     print("Adding bill " + id + " to the list.")
                     bills.append({"id": id, "author": author, "price": price, "description": description})
+                    bills_done_ids.append(id)
 
                 if id == end:
                     print("Found the last bill.")
                     bills.append({"id": id, "author": author, "price": price, "description": description})
+                    bills_done_ids.append(id)
                     automatically_add = False
 
         for bill in bills:
