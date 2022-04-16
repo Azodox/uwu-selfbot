@@ -81,6 +81,8 @@ async def check_price(displayed_price: int, s: str):
         print("Found a bill with invalid declaration, skipping...")
         return {"value": False, "prime": 0}
 
+    print("Displayed price : " + str(displayed_price))
+    print(int(displayed_price) == (int(total + int(tip)) if discount is False else int(int(total + int(tip)) * 0.9)))
     if int(displayed_price) == (int(total + int(tip)) if discount is False else int(int(total + int(tip)) * 0.9)):
         if tip != 0:
             prime += int(int(tip) * 0.75)
