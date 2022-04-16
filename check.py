@@ -82,6 +82,9 @@ async def check_price(displayed_price: int, s: str):
         return {"value": False, "prime": 0}
 
     print("Displayed price : " + str(displayed_price))
+    print("Total price : " + str(total))
+    print("Total + tip : " + str(total + int(tip)))
+    print("Total + tip + discount : " + str(int(total + int(tip)) * 0.9))
     print(int(displayed_price) == (int(total + int(tip)) if discount is False else int(int(total + int(tip)) * 0.9)))
     if int(displayed_price) == (int(total + int(tip)) if discount is False else int(int(total + int(tip)) * 0.9)):
         if tip != 0:
