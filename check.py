@@ -75,7 +75,7 @@ async def check_price(displayed_price: int, s: str):
                 amount = int(split[i - 1])
                 total_price = amount * int(short_names_to_normal_prices.get(item) if delivery is False else int(short_names_to_delivery_prices.get(item)))
                 total += total_price
-                prime += 3 * amount
+                prime += 5 * amount
     except:
         print("Found a bill with invalid declaration, skipping...")
         return {"value": False, "prime": 0}
