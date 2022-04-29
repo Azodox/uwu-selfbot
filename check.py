@@ -15,7 +15,7 @@ short_names_to_normal_prices = {
     "cr": 35,
     "mf": 40,
     "gfingsoif": 135,
-    "chocochoco": 100,
+    "choco'choco": 100,
     "lebonmatin": 75,
     "mac": 100
 }
@@ -35,7 +35,7 @@ short_names_to_delivery_prices = {
     "cr": 45,
     "mf": 50,
     "gfingsoif": 150,
-    "chocochoco": 120,
+    "choco'choco": 120,
     "lebonmatin": 95,
     "mac": 120
 }
