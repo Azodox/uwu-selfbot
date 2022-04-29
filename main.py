@@ -87,7 +87,7 @@ async def main():
                 price = ""
                 description = ""
                 for fieldsList in embed.description.split("\n"):
-                    fields = fieldsList.split(": ") if not None else fieldsList.split(" -> ")
+                    fields = fieldsList.split(": ") if fieldsList.__contains__(":") else fieldsList.split(" -> ")
                     if str(fields[0]) == "Facture ID":
                         id = fields[1]
                     elif str(fields[0].replace(" ", "")) == "Auteur":
