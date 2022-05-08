@@ -821,8 +821,8 @@ async def calculate(logging, client, options):
         }
     })
 
-    sh.share("likemoi99@gmail.com", perm_type='user', role="writer")
-    sh.share("selim160706@gmail.com", perm_type='user', role="writer")
+    sh.share("likemoi99@gmail.com", perm_type='user', role="writer", notify=False)
+    sh.share("selim160706@gmail.com", perm_type='user', role="writer", notify=False)
 
     print("\nGénération terminée !")
     print("Voici l'url vers la feuille Google : " + sh.url)
