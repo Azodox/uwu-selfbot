@@ -438,13 +438,13 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("B5:D5", {
+    wks.format("A5:D5", {
         "borders": {
             "top": default_border,
         }
     })
 
-    wks.format("B7:D7", {
+    wks.format("A7:D7", {
         "borders": {
             "bottom": default_border
         }
@@ -471,7 +471,7 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("B17:D17", {
+    wks.format("A17:D17", {
         "borders": {
             "bottom": default_border
         }
@@ -503,21 +503,9 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("D2", {
-        "borders": {
-            "right": default_border
-        }
-    })
-
     wks.format("B21:D21", {
         "borders": {
             "bottom": None
-        }
-    })
-
-    wks.format("D21", {
-        "borders": {
-            "right": default_border
         }
     })
 
@@ -527,69 +515,50 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("D28", {
+    wks.format("B6:D6", {
         "borders": {
-            "right": default_border
+            "top": default_border
         }
     })
 
-    wks.format("D3", {
+    wks.format("B9:D9", {
         "borders": {
-            "right": default_border
+            "top": None,
+            "bottom": None
         }
     })
 
-    wks.format("D25", {
+    wks.format("B12:D12", {
         "borders": {
-            "right": default_border
+            "top": thin_border,
+            "bottom": None
         }
     })
 
-    wks.format("D29", {
+    wks.format("B15:D15", {
         "borders": {
-            "right": default_border
+            "top": thin_border,
+            "bottom": None
         }
     })
 
-    wks.format("D13", {
+    wks.format("B21:D21", {
         "borders": {
-            "right": default_border
+            "top": thin_border,
+            "bottom": None
         }
     })
 
-    wks.format("D10", {
+    wks.format("B28:D28", {
         "borders": {
-            "right": default_border
+            "top": thin_border,
+            "bottom": None
         }
     })
 
-    wks.format("D5", {
+    wks.format("E2:E30", {
         "borders": {
-            "right": default_border
-        }
-    })
-
-    wks.format("D3", {
-        "borders": {
-            "right": default_border
-        }
-    })
-
-    wks.format("D7", {
-        "borders": {
-            "right": default_border
-        }
-    })
-
-    wks.format("D16", {
-        "borders": {
-            "right": default_border
-        }
-    })
-
-    wks.format("D17", {
-        "borders": {
-            "right": default_border
+            "left": default_border
         }
     })
 
