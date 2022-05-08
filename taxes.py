@@ -325,6 +325,12 @@ async def calculate(logging, client, options):
         }
     })
 
+    wks.format("C2:C31", {
+        "borders": {
+            "right": default_border,
+        }
+    })
+
     wks.format("A1:D1", {
         "borders": {
             "bottom": default_border
@@ -385,6 +391,8 @@ async def calculate(logging, client, options):
         "horizontalAlignment": "RIGHT"
     })
 
+    time.sleep(60)
+
     green = {"red": colors.to_rgb("#b6d7a8")[0], "green": colors.to_rgb("#b6d7a8")[1], "blue": colors.to_rgb("#b6d7a8")[2]}
 
     wks.format("A2", {
@@ -405,16 +413,7 @@ async def calculate(logging, client, options):
         "backgroundColor": pink
     })
 
-    wks.format("C2:C31", {
-        "borders": {
-            "right": default_border,
-            "bottom": default_border,
-            "left": default_border,
-            "top": default_border
-        }
-    })
-
-    wks.format("D31", {
+    wks.format("A31:D31", {
         "borders": {
             "top": default_border
         }
@@ -423,6 +422,78 @@ async def calculate(logging, client, options):
     wks.format("A4", {
         "borders": {
             "bottom": default_border,
+        }
+    })
+
+    wks.format("A2:A30", {
+        "borders": {
+            "right": default_border,
+        }
+    })
+
+    wks.format("B3:D3", {
+        "borders": {
+            "bottom": None,
+            "top": None
+        }
+    })
+
+    wks.format("B5:D5", {
+        "borders": {
+            "top": default_border,
+        }
+    })
+
+    wks.format("B7:D7", {
+        "borders": {
+            "bottom": default_border
+        }
+    })
+
+    wks.format("B10:D10", {
+        "borders": {
+            "bottom": None,
+            "top": None
+        }
+    })
+
+    wks.format("B13:D13", {
+        "borders": {
+            "bottom": None,
+            "top": None
+        }
+    })
+
+    wks.format("B16:D16", {
+        "borders": {
+            "bottom": None,
+            "top": None
+        }
+    })
+
+    wks.format("B17:D17", {
+        "borders": {
+            "bottom": default_border
+        }
+    })
+
+    wks.format("B22:D22", {
+        "borders": {
+            "bottom": None,
+            "top": None
+        }
+    })
+
+    wks.format("B25:D25", {
+        "borders": {
+            "bottom": None
+        }
+    })
+
+    wks.format("B29:D29", {
+        "borders": {
+            "bottom": None,
+            "top": None
         }
     })
 
