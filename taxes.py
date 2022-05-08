@@ -755,7 +755,25 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("F19:G19", {
+    wks.format("F19:F19", {
+        "borders": {
+            "bottom": default_border,
+            "right": None,
+            "left": None,
+            "top": None
+        }
+    })
+
+    wks.format("G2:G4", {
+        "borders": {
+            "top": default_border,
+            "bottom": default_border,
+            "left": None,
+            "right": default_border
+        }
+    })
+
+    wks.format("F2:F4", {
         "borders": {
             "bottom": default_border,
             "right": None,
