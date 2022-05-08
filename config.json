@@ -1,5 +1,8 @@
 {
   "token": "",
   "channelID": "",
-  "guildID": ""
+  "guildID": "",
+  "purchasesChannelID": "",
+  "vehicleOrderChannelID": "",
+  "accountChannelID": ""
 }
