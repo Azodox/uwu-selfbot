@@ -425,12 +425,6 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("A2:A30", {
-        "borders": {
-            "right": default_border,
-        }
-    })
-
     wks.format("B3:D3", {
         "borders": {
             "bottom": None,
@@ -517,7 +511,8 @@ async def calculate(logging, client, options):
 
     wks.format("B6:D6", {
         "borders": {
-            "top": default_border
+            "top": thin_border,
+            "bottom": thin_border
         }
     })
 
@@ -559,6 +554,12 @@ async def calculate(logging, client, options):
     wks.format("E2:E30", {
         "borders": {
             "left": default_border
+        }
+    })
+
+    wks.format("A2:A30", {
+        "borders": {
+            "right": default_border,
         }
     })
 
