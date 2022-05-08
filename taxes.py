@@ -1,5 +1,7 @@
 import datetime
 import re
+from builtins import bool
+
 import bonus
 import gspread
 from calendar import timegm
@@ -170,8 +172,8 @@ async def calculate(logging, client, options):
     received_bills_without_tax = received_bills_total / 1.149975
     tax_on_received_bills = received_bills_total - received_bills_without_tax
     gross_profit = turnover - purchases_with_tax - received_bills_total - bonus_total - others_with_tax
-    expenses = all_purchases + received_bills_without_tax + others
-    expenses_with_tax = purchases_with_tax + received_bills_total + others_with_tax + bonus_total
+    expenses = all_purchases + received_bills_without_tax + others + bonus_total
+    expenses_with_tax = purchases_with_tax + received_bills_total + others_with_tax
     tax_on_expenses = expenses_with_tax - expenses
     perceived_taxes = before_tx * 0.15
     paid_taxes = tax_on_received_bills + tax_on_purchases + tax_on_others
