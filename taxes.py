@@ -63,6 +63,8 @@ async def calculate(logging, client, options):
 
     total_tips = 0
     messages_bills_ids = []
+    delivery_bills_total = 0
+    normal_bills_total = 0
     async for message in channel.history(limit=5000):
         if start <= timegm(message.created_at.utctimetuple()) <= end:
             for embed in message.embeds:
@@ -101,6 +103,11 @@ async def calculate(logging, client, options):
                 except:
                     pass
 
+                if description.__contains__("[Livraison]"):
+                    delivery_bills_total += int(price)
+                else:
+                    normal_bills_total += int(price)
+
                 turnover += int(price)
 
     last_bill_id = messages_bills_ids[0]
@@ -110,7 +117,7 @@ async def calculate(logging, client, options):
     others_with_tax = others * 1.15
     tax_on_others = others_with_tax - others
 
-    purchases = total_tips * 0.25
+    purchases = 0
     async for purchase in purchases_channel.history(limit=5000):
 
         if start <= timegm(purchase.created_at.utctimetuple()) <= end:
@@ -150,16 +157,22 @@ async def calculate(logging, client, options):
     all_bonuses = await bonus.calculate(logging, client, options, first_bill_id, last_bill_id)
     before_tx = turnover / 1.49975
 
-    bonus_total = 0
+    conventional_bonus = 0
     for b in all_bonuses:
-        bonus_total += int(all_bonuses[b])
+        conventional_bonus += int(all_bonuses[b])
 
-    all_purchases = purchases + vehicle_orders
+    exceptional_bonus = int(input("Entrez le montant des primes exceptionnels : "))
+    bonus_total = conventional_bonus + exceptional_bonus
+
+    all_purchases = purchases + vehicle_orders + int(total_tips * 0.25)
     purchases_with_tax = all_purchases * 1.15
     tax_on_purchases = purchases_with_tax - all_purchases
     received_bills_with_tax = received_bills_total * 1.15
     tax_on_received_bills = received_bills_with_tax - received_bills_total
     gross_profit = turnover - purchases_with_tax - received_bills_with_tax - bonus_total - others_with_tax
+    expenses = all_purchases + received_bills_total + others
+    expenses_with_tax = purchases_with_tax + received_bills_with_tax + others_with_tax + bonus_total
+    tax_on_expenses = expenses_with_tax - expenses
     perceived_taxes = before_tx * 0.15
     paid_taxes = tax_on_received_bills + tax_on_purchases + tax_on_others
     overpaid_taxes = perceived_taxes - paid_taxes
@@ -305,6 +318,38 @@ async def calculate(logging, client, options):
     # Bénéfice net
     wks.update_acell('B34', 'Bénéfice net')
     wks.update_acell('C34', int(profit))
+
+    # Détail des factures
+    wks.update_acell('F2', 'Détail des factures')
+    wks.update_acell('F3', 'Livraison')
+    wks.update_acell('G3', delivery_bills_total)
+    wks.update_acell('F4', 'Non livrées')
+    wks.update_acell('G4', normal_bills_total)
+
+    # Détail des achats
+    wks.update_acell('F8', 'Détail des achats')
+    wks.update_acell('F9', 'Matières premières')
+    wks.update_acell('G9', int(purchases))
+    wks.update_acell('F10', 'Véhicules')
+    wks.update_acell('G10', int(vehicle_orders))
+    wks.update_acell('F11', '25% des pourboires')
+    wks.update_acell('G11', int(total_tips * 0.25))
+
+    # Résumé des dépenses
+    wks.update_acell('F14', 'Résumé des dépenses')
+    wks.update_acell('F15', 'Toutes les dépenses')
+    wks.update_acell('G15', int(expenses))
+    wks.update_acell('F16', 'Toutes les dépenses avec taxes')
+    wks.update_acell('G16', int(expenses_with_tax))
+    wks.update_acell('F17', 'Taxes sur les dépenses')
+    wks.update_acell('G17', int(tax_on_expenses))
+
+    # Détail des primes
+    wks.update_acell('F19', 'Détail des primes')
+    wks.update_acell('F20', 'Primes conventionelles')
+    wks.update_acell('G20', int(conventional_bonus))
+    wks.update_acell('F21', 'Primes exceptionnelles')
+    wks.update_acell('G21', int(exceptional_bonus))
 
     wks.update_acell('D35', "POWERED BY C.A.P.I. & UWU'S CALC")
 
@@ -617,6 +662,66 @@ async def calculate(logging, client, options):
     wks.format("A31", {
         "borders": {
             "top": default_border
+        }
+    })
+
+    wks.format("F2:G4", {
+        "borders": {
+            "top": default_border,
+            "bottom": default_border,
+            "left": default_border,
+            "right": default_border
+        }
+    })
+
+    wks.format("F2:G2", {
+        "borders": {
+            "bottom": thin_border
+        }
+    })
+
+    wks.format("F8:G11", {
+        "borders": {
+            "top": default_border,
+            "bottom": default_border,
+            "left": default_border,
+            "right": default_border
+        }
+    })
+
+    wks.format("F8:G8", {
+        "borders": {
+            "bottom": thin_border
+        }
+    })
+
+    wks.format("F14:G17", {
+        "borders": {
+            "top": default_border,
+            "bottom": default_border,
+            "left": default_border,
+            "right": default_border
+        }
+    })
+
+    wks.format("F14:G14", {
+        "borders": {
+            "bottom": thin_border
+        }
+    })
+
+    wks.format("F19:G21", {
+        "borders": {
+            "top": default_border,
+            "bottom": default_border,
+            "left": default_border,
+            "right": default_border
+        }
+    })
+
+    wks.format("F19:G19", {
+        "borders": {
+            "bottom": thin_border
         }
     })
 
