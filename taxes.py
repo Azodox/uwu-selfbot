@@ -683,8 +683,6 @@ async def calculate(logging, client, options):
         }
     })
 
-    time.sleep(60)
-
     wks.format("F2:G2", {
         "borders": {
             "bottom": thin_border
