@@ -169,9 +169,9 @@ async def calculate(logging, client, options):
     tax_on_purchases = purchases_with_tax - all_purchases
     received_bills_without_tax = received_bills_total / 1.149975
     tax_on_received_bills = received_bills_total - received_bills_without_tax
-    gross_profit = turnover - purchases_with_tax - received_bills_without_tax - bonus_total - others_with_tax
-    expenses = all_purchases + received_bills_total + others
-    expenses_with_tax = purchases_with_tax + received_bills_without_tax + others_with_tax + bonus_total
+    gross_profit = turnover - purchases_with_tax - received_bills_total - bonus_total - others_with_tax
+    expenses = all_purchases + received_bills_without_tax + others
+    expenses_with_tax = purchases_with_tax + received_bills_total + others_with_tax + bonus_total
     tax_on_expenses = expenses_with_tax - expenses
     perceived_taxes = before_tx * 0.15
     paid_taxes = tax_on_received_bills + tax_on_purchases + tax_on_others
@@ -746,7 +746,7 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("G19:G21", {
+    wks.format("G20:G21", {
         "borders": {
             "top": default_border,
             "bottom": default_border,
@@ -764,7 +764,7 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("G2:G4", {
+    wks.format("G3:G4", {
         "borders": {
             "top": default_border,
             "bottom": default_border,
@@ -777,7 +777,7 @@ async def calculate(logging, client, options):
         "borders": {
             "bottom": default_border,
             "right": None,
-            "left": None,
+            "left": default_border,
             "top": None
         }
     })
