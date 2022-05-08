@@ -217,7 +217,7 @@ async def calculate(logging, client, options):
     # Total des primes
     wks.update_acell('B8', 'Total des primes')
     wks.update_acell('C8', int(bonus_total))
-    wks.update_acell('D8', "Primes versées aux employés (5$ par item vendu + 75% des pourboires)")
+    wks.update_acell('D8', "Primes versées aux employés (5$ par item vendu + 75% des pourboires) + primes exceptionnelles")
 
     # Achats + 25% des pourboires
     wks.update_acell('B9', 'Achats')
