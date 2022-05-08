@@ -310,7 +310,8 @@ async def calculate(logging, client, options):
 
     wks.columns_auto_resize(0, 25)
 
-    default_border = {"style": "SOLID_THICK"}
+    default_border = {"style": "SOLID_MEDIUM"}
+    thin_border = {"style": "SOLID"}
 
     light_pink = {"red": colors.to_rgb("#d5a6bd")[0], "green": colors.to_rgb("#d5a6bd")[1], "blue": colors.to_rgb("#d5a6bd")[2]}
 
@@ -355,9 +356,16 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("D2:D31", {
+    wks.format("D2:D30", {
         "borders": {
-            "right": default_border
+            "right": default_border,
+            "bottom": thin_border
+        }
+    })
+
+    wks.format("B2:C30", {
+        "borders": {
+            "bottom": thin_border,
         }
     })
 
@@ -408,7 +416,13 @@ async def calculate(logging, client, options):
 
     wks.format("D31", {
         "borders": {
-            "bottom": default_border
+            "top": default_border
+        }
+    })
+
+    wks.format("A4", {
+        "borders": {
+            "bottom": default_border,
         }
     })
 
