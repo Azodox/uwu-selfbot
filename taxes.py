@@ -129,7 +129,7 @@ async def calculate(logging, client, options):
                 for fieldsList in embed.description.split("\n"):
                     fields = fieldsList.split(": ")
                     if str(fields[0]) == "Coût":
-                        cost = int(fields[1])
+                        cost = int(fields[1].replace("$", ""))
 
                 if cost == 0:
                     break
