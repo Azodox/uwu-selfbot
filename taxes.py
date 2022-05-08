@@ -315,7 +315,7 @@ async def calculate(logging, client, options):
 
     light_pink = {"red": colors.to_rgb("#d5a6bd")[0], "green": colors.to_rgb("#d5a6bd")[1], "blue": colors.to_rgb("#d5a6bd")[2]}
 
-    wks.format("B33:C33", {
+    wks.format("B33:C34", {
         "backgroundColor": light_pink
     })
 
@@ -570,8 +570,8 @@ async def calculate(logging, client, options):
         "borders": {
             "left": thin_border,
             "right": default_border,
-            "top": default_border,
-            "bottom": thin_border
+            "top": thin_border,
+            "bottom": default_border
         }
     })
 
@@ -590,6 +590,33 @@ async def calculate(logging, client, options):
             "right": thin_border,
             "top": thin_border,
             "bottom": default_border
+        }
+    })
+
+    wks.format("A5", {
+        "borders": {
+            "top": default_border,
+            "right": default_border
+        }
+    })
+
+    wks.format("A8", {
+        "borders": {
+            "top": default_border,
+            "right": default_border
+        }
+    })
+
+    wks.format("A18", {
+        "borders": {
+            "top": default_border,
+            "right": default_border
+        }
+    })
+
+    wks.format("A31", {
+        "borders": {
+            "top": default_border
         }
     })
 
