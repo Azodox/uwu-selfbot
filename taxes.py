@@ -665,7 +665,7 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("F2:F4", {
+    wks.format("F8:F11", {
         "borders": {
             "top": default_border,
             "bottom": default_border,
@@ -674,7 +674,7 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("G2:G4", {
+    wks.format("G8:G11", {
         "borders": {
             "top": default_border,
             "bottom": default_border,
@@ -755,11 +755,70 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("F19:G19", {
+    wks.format("F20", {
         "borders": {
-            "bottom": None
+            "bottom": thin_border,
+            "top": default_border,
+            "left": default_border
         }
     })
+
+    wks.format("G20", {
+        "borders": {
+            "bottom": thin_border,
+            "top": default_border,
+            "right": default_border
+        }
+    })
+
+    wks.format("F16", {
+        "borders": {
+            "bottom": thin_border,
+            "top": thin_border,
+            "left": default_border
+        }
+    })
+
+    wks.format("G16", {
+        "borders": {
+            "bottom": thin_border,
+            "top": thin_border,
+            "right": default_border
+        }
+    })
+
+    wks.format("F10", {
+        "borders": {
+            "bottom": thin_border,
+            "top": thin_border,
+            "left": default_border
+        }
+    })
+
+    wks.format("G10", {
+        "borders": {
+            "bottom": thin_border,
+            "top": thin_border,
+            "right": default_border
+        }
+    })
+
+    wks.format("F3", {
+        "borders": {
+            "bottom": thin_border,
+            "top": default_border,
+            "left": default_border
+        }
+    })
+
+    wks.format("G3", {
+        "borders": {
+            "bottom": thin_border,
+            "top": default_border,
+            "right": default_border
+        }
+    })
+
 
     sh.share("likemoi99@gmail.com", perm_type='user', role="writer")
     sh.share("selim160706@gmail.com", perm_type='user', role="writer")
