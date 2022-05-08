@@ -497,6 +497,102 @@ async def calculate(logging, client, options):
         }
     })
 
+    wks.format("B2:D2", {
+        "borders": {
+            "bottom": None
+        }
+    })
+
+    wks.format("D2", {
+        "borders": {
+            "right": default_border
+        }
+    })
+
+    wks.format("B21:D21", {
+        "borders": {
+            "bottom": None
+        }
+    })
+
+    wks.format("D21", {
+        "borders": {
+            "right": default_border
+        }
+    })
+
+    wks.format("B28:D28", {
+        "borders": {
+            "bottom": None
+        }
+    })
+
+    wks.format("D28", {
+        "borders": {
+            "right": default_border
+        }
+    })
+
+    wks.format("D3", {
+        "borders": {
+            "right": default_border
+        }
+    })
+
+    wks.format("D25", {
+        "borders": {
+            "right": default_border
+        }
+    })
+
+    wks.format("D29", {
+        "borders": {
+            "right": default_border
+        }
+    })
+
+    wks.format("D13", {
+        "borders": {
+            "right": default_border
+        }
+    })
+
+    wks.format("D10", {
+        "borders": {
+            "right": default_border
+        }
+    })
+
+    wks.format("D5", {
+        "borders": {
+            "right": default_border
+        }
+    })
+
+    wks.format("D3", {
+        "borders": {
+            "right": default_border
+        }
+    })
+
+    wks.format("D7", {
+        "borders": {
+            "right": default_border
+        }
+    })
+
+    wks.format("D16", {
+        "borders": {
+            "right": default_border
+        }
+    })
+
+    wks.format("D17", {
+        "borders": {
+            "right": default_border
+        }
+    })
+
     sh.share("likemoi99@gmail.com", perm_type='user', role="writer")
     sh.share("selim160706@gmail.com", perm_type='user', role="writer")
 
