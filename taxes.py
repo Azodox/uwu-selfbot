@@ -128,6 +128,7 @@ async def calculate(logging, client, options):
                 cost = 0
                 for fieldsList in embed.description.split("\n"):
                     fields = fieldsList.split(": ")
+                    print("fields: " + str(fields))
                     if str(fields[0]) == "Coût":
                         cost = int(fields[1].replace("$", ""))
 
@@ -710,11 +711,20 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("F19:G21", {
+    wks.format("F19:F21", {
         "borders": {
             "top": default_border,
             "bottom": default_border,
             "left": default_border,
+            "right": thin_border
+        }
+    })
+
+    wks.format("G19:G21", {
+        "borders": {
+            "top": default_border,
+            "bottom": default_border,
+            "left": thin_border,
             "right": default_border
         }
     })
