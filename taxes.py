@@ -755,67 +755,12 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("F20", {
+    wks.format("F19:G19", {
         "borders": {
-            "bottom": thin_border,
-            "top": default_border,
-            "left": default_border
-        }
-    })
-
-    wks.format("G20", {
-        "borders": {
-            "bottom": thin_border,
-            "top": default_border,
-            "right": default_border
-        }
-    })
-
-    wks.format("F16", {
-        "borders": {
-            "bottom": thin_border,
-            "top": thin_border,
-            "left": default_border
-        }
-    })
-
-    wks.format("G16", {
-        "borders": {
-            "bottom": thin_border,
-            "top": thin_border,
-            "right": default_border
-        }
-    })
-
-    wks.format("F10", {
-        "borders": {
-            "bottom": thin_border,
-            "top": thin_border,
-            "left": default_border
-        }
-    })
-
-    wks.format("G10", {
-        "borders": {
-            "bottom": thin_border,
-            "top": thin_border,
-            "right": default_border
-        }
-    })
-
-    wks.format("F3", {
-        "borders": {
-            "bottom": thin_border,
-            "top": default_border,
-            "left": default_border
-        }
-    })
-
-    wks.format("G3", {
-        "borders": {
-            "bottom": thin_border,
-            "top": default_border,
-            "right": default_border
+            "bottom": default_border,
+            "right": None,
+            "left": None,
+            "top": None
         }
     })
 
