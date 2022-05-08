@@ -155,7 +155,7 @@ async def calculate(logging, client, options):
                 supplies += int(re.search(r'\d+', embed.description).group())
 
     all_bonuses = await bonus.calculate(logging, client, options, first_bill_id, last_bill_id)
-    before_tx = turnover / 1.49975
+    before_tx = turnover / 1.149975
 
     conventional_bonus = 0
     for b in all_bonuses:
@@ -167,11 +167,11 @@ async def calculate(logging, client, options):
     all_purchases = purchases + vehicle_orders + int(total_tips * 0.25)
     purchases_with_tax = all_purchases * 1.15
     tax_on_purchases = purchases_with_tax - all_purchases
-    received_bills_with_tax = received_bills_total * 1.15
-    tax_on_received_bills = received_bills_with_tax - received_bills_total
-    gross_profit = turnover - purchases_with_tax - received_bills_with_tax - bonus_total - others_with_tax
+    received_bills_without_tax = received_bills_total / 1.149975
+    tax_on_received_bills = received_bills_total - received_bills_without_tax
+    gross_profit = turnover - purchases_with_tax - received_bills_without_tax - bonus_total - others_with_tax
     expenses = all_purchases + received_bills_total + others
-    expenses_with_tax = purchases_with_tax + received_bills_with_tax + others_with_tax + bonus_total
+    expenses_with_tax = purchases_with_tax + received_bills_without_tax + others_with_tax + bonus_total
     tax_on_expenses = expenses_with_tax - expenses
     perceived_taxes = before_tx * 0.15
     paid_taxes = tax_on_received_bills + tax_on_purchases + tax_on_others
@@ -235,19 +235,19 @@ async def calculate(logging, client, options):
     wks.update_acell('D11', "Achats avec taxes-Achats")
 
     # Total des factures reçues
-    wks.update_acell('B12', 'Montant total des factures reçues')
+    wks.update_acell('B12', 'Montant total des factures reçues avec taxes')
     wks.update_acell('C12', int(received_bills_total))
     wks.update_acell('D12', "Cumule des factures reçues au nom de l'entreprise (sortie de garage, réparations de véhicules de compagnie...)")
 
     # Factures reçues avec taxes
-    wks.update_acell('B13', 'Factures reçues avec taxes')
-    wks.update_acell('C13', int(received_bills_with_tax))
-    wks.update_acell('D13', "Montant total des factures reçues*1.15")
+    wks.update_acell('B13', 'Factures reçues sans taxes')
+    wks.update_acell('C13', int(received_bills_without_tax))
+    wks.update_acell('D13', "Montant total des factures reçues/1.149975")
 
     # Taxe sur les factures
     wks.update_acell('B14', 'Taxe sur les factures')
     wks.update_acell('C14', int(tax_on_received_bills))
-    wks.update_acell('D14', "Factures avec taxes-Montant total des factures reçues")
+    wks.update_acell('D14', "Montant avec taxes-factures sans taxes")
 
     # Bénéfice brut
     wks.update_acell('B19', 'Bénéfice brut')
@@ -313,7 +313,7 @@ async def calculate(logging, client, options):
 
     # Impôts à remettre
     wks.update_acell('B33', 'Impôts à remettre')
-    wks.update_acell('C33', int(taxes))
+    wks.update_acell('C33', int(taxes) if taxes > 0 else int(management_cost))
 
     # Bénéfice net
     wks.update_acell('B34', 'Bénéfice net')
