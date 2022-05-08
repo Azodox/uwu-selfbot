@@ -665,11 +665,20 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("F2:G4", {
+    wks.format("F2:F4", {
         "borders": {
             "top": default_border,
             "bottom": default_border,
             "left": default_border,
+            "right": None
+        }
+    })
+
+    wks.format("G2:G4", {
+        "borders": {
+            "top": default_border,
+            "bottom": default_border,
+            "left": None,
             "right": default_border
         }
     })
@@ -680,11 +689,20 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("F8:G11", {
+    wks.format("F8:F11", {
         "borders": {
             "top": default_border,
             "bottom": default_border,
             "left": default_border,
+            "right": None
+        }
+    })
+
+    wks.format("G8:G11", {
+        "borders": {
+            "top": default_border,
+            "bottom": default_border,
+            "left": None,
             "right": default_border
         }
     })
@@ -695,11 +713,20 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("F14:G17", {
+    wks.format("F14:F17", {
         "borders": {
             "top": default_border,
             "bottom": default_border,
             "left": default_border,
+            "right": None
+        }
+    })
+
+    wks.format("G14:G17", {
+        "borders": {
+            "top": default_border,
+            "bottom": default_border,
+            "left": None,
             "right": default_border
         }
     })
@@ -715,7 +742,7 @@ async def calculate(logging, client, options):
             "top": default_border,
             "bottom": default_border,
             "left": default_border,
-            "right": thin_border
+            "right": None
         }
     })
 
@@ -723,14 +750,14 @@ async def calculate(logging, client, options):
         "borders": {
             "top": default_border,
             "bottom": default_border,
-            "left": thin_border,
+            "left": None,
             "right": default_border
         }
     })
 
     wks.format("F19:G19", {
         "borders": {
-            "bottom": thin_border
+            "bottom": None
         }
     })
 
