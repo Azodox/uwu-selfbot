@@ -1,7 +1,5 @@
 import datetime
 import re
-from builtins import bool
-
 import bonus
 import gspread
 from calendar import timegm
@@ -183,7 +181,7 @@ async def calculate(logging, client, options):
     management_cost = management_cost_per_employee * employees_number
     overpaid_taxes_and_management_cost = overpaid_taxes + management_cost
     gross_profit_before_taxes = gross_profit - overpaid_taxes_and_management_cost
-    tax_on_profit = gross_profit_before_taxes * 0.15
+    tax_on_profit = gross_profit_before_taxes * 0.05
     taxes = tax_on_profit + overpaid_taxes_and_management_cost
     profit = gross_profit_before_taxes - taxes
 
@@ -311,7 +309,7 @@ async def calculate(logging, client, options):
     # Taxe sur le bénéfice brut
     wks.update_acell('B30', 'Taxe sur le bénéfice brut')
     wks.update_acell('C30', int(tax_on_profit))
-    wks.update_acell('D30', "Bénéfice but*0.15")
+    wks.update_acell('D30', "Bénéfice but*0.05")
 
     # Impôts à remettre
     wks.update_acell('B33', 'Impôts à remettre')
