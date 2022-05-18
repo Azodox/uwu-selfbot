@@ -17,7 +17,11 @@ short_names_to_normal_prices = {
     "gfingsoif": 160,
     "chocochoco": 140,
     "lebonmatin": 115,
-    "mac": 100
+    "mac": 100,
+    "bp": 60,
+    "bb": 240,
+    "tg": 20,
+    "cs": 20
 }
 
 short_names_to_delivery_prices = {
@@ -37,7 +41,11 @@ short_names_to_delivery_prices = {
     "gfingsoif": 180,
     "chocochoco": 160,
     "lebonmatin": 135,
-    "mac": 110
+    "mac": 110,
+    "bp": 70,
+    "bb": 280,
+    "tg": 30,
+    "cs": 30
 }
 
 
