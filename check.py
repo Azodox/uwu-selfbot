@@ -48,6 +48,11 @@ short_names_to_delivery_prices = {
     "cs": 30
 }
 
+shorts_names_to_public_services_prices = {
+    "c": 20,
+    "cr": 15
+}
+
 
 async def check_price(displayed_price: int, s: str):
     delivery = False
@@ -85,7 +90,12 @@ async def check_price(displayed_price: int, s: str):
 
             if item != "" and item.isnumeric() is False:
                 amount = int(split[i - 1])
-                total_price = amount * int(short_names_to_normal_prices.get(item) if delivery is False else int(short_names_to_delivery_prices.get(item)))
+                if delivery is True:
+                    total_price = amount * int(short_names_to_delivery_prices.get(item))
+                elif public_service is True:
+                    total_price = amount * int(shorts_names_to_public_services_prices.get(item))
+                else:
+                    total_price = amount * int(short_names_to_normal_prices.get(item))
                 total += total_price
                 prime += 5 * amount
 
