@@ -52,6 +52,7 @@ short_names_to_delivery_prices = {
 async def check_price(displayed_price: int, s: str):
     delivery = False
     discount = False
+    public_service = False
 
     total = 0
     prime = 0
@@ -63,6 +64,8 @@ async def check_price(displayed_price: int, s: str):
                 delivery = True
             elif option == "Réduction 10%":
                 discount = True
+            elif option == "Service Public":
+                public_service = True
 
     try:
         tip = 0
@@ -70,7 +73,7 @@ async def check_price(displayed_price: int, s: str):
             tip = re.search(r".*?\((.*?)\)", s).group(1)
             tip = tip.replace("$", "").replace(" pb", "")
 
-        if discount is True or delivery is True:
+        if discount is True or delivery is True or public_service is True:
             s = s.split("]")[2 if discount is True and delivery is True else 1]
 
         regex = r"(.*?){}".format(r"\(" if tip != 0 else "")
