@@ -50,7 +50,9 @@ short_names_to_delivery_prices = {
 
 shorts_names_to_public_services_prices = {
     "c": 20,
-    "cr": 15
+    "cr": 15,
+    "cg": 30,
+    "ch": 25
 }
 
 
