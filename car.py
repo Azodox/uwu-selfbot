@@ -25,4 +25,5 @@ async def calculate():
         for i in range(int(participant["tickets"])):
             entries.append(participant["name"])
 
+    entries.sort()
     print(entries)
