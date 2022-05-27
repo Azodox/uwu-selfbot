@@ -1,5 +1,6 @@
 import gspread
 import time
+import random
 
 
 async def calculate():
@@ -26,4 +27,8 @@ async def calculate():
             entries.append(participant["name"])
 
     entries.sort()
+    print("===============================================================")
+    print("Entrées :")
     print(entries)
+    print("===============================================================")
+    print("Gagnant : " + str(random.choice(entries)))
