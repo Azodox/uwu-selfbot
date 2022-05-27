@@ -3,6 +3,7 @@ import json
 import discord
 import logging
 import taxes
+import car
 
 print("Loading...")
 
@@ -15,12 +16,15 @@ with open('config.json') as config_file:
 
 
 async def main():
-    mode = input("Voulez-vous calculer les taxes ou les primes ? (taxes/primes) ")
+    mode = input("Voulez-vous calculer les taxes ou les primes ou les résultats de la voiture ? (taxes/primes/voiture) ")
     if mode == "taxes":
         await taxes.calculate(logging, client, options)
 
     if mode == "primes":
         await bonus.calculate(logging, client, options)
+
+    if mode == "voiture":
+        await car.calculate()
 
 
 class Client(discord.Client):
