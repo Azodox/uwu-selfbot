@@ -1,4 +1,5 @@
 import gspread
+import time
 
 
 async def calculate():
@@ -10,6 +11,10 @@ async def calculate():
 
     participants = []
     for i in range(1, a_cells_range):
+        if i == int(a_cells_range / 2):
+            print("Attente d'une minute...")
+            time.sleep(60)
+
         participant = worksheet.acell('A' + str(i)).value
         if participant != "Nom de l'inscrit":
             amount = worksheet.acell('B' + str(i)).value
