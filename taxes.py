@@ -113,6 +113,9 @@ async def calculate(logging, client, options):
     last_bill_id = messages_bills_ids[0]
     first_bill_id = messages_bills_ids[len(messages_bills_ids) - 1]
 
+    print(last_bill_id)
+    print(first_bill_id)
+
     others = int(input("Entrez le montant des autres achats: "))
     others_with_tax = others * 1.15
     tax_on_others = others_with_tax - others
