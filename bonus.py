@@ -22,7 +22,7 @@ async def calculate(logging, client, options, first_bill_id=None, last_bill_id=N
 
     if first_bill_id and last_bill_id is not None:
         # First bill is the last bill because we fetch the messages in reverse order
-        check_many(channel, last_bill_id, first_bill_id)
+        await check_many(channel, last_bill_id, first_bill_id)
     else:
         if input("Voulez-vous vérifier une facture en particulier ? (o/n) ") == "o":
             messageID = input("Entrez l'id du message contenant la facture : ")
@@ -67,7 +67,7 @@ async def calculate(logging, client, options, first_bill_id=None, last_bill_id=N
         else:
             end = input("Entrez l'id de la première facture : ")
             start = input("Entrez l'id de la dernière facture : ")
-            check_many(channel, end, start)
+            await check_many(channel, end, start)
 
     print("----------------------------------------------------")
     print("Factures non valides : " + str(non_valid_bills))
@@ -77,7 +77,7 @@ async def calculate(logging, client, options, first_bill_id=None, last_bill_id=N
     return bonus
 
 
-def check_many(channel, first_bill_id, last_bill_id):
+async def check_many(channel, first_bill_id, last_bill_id):
     bills = []
     bills_done_ids = []
     automatically_add = False
