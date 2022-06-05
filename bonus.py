@@ -67,7 +67,7 @@ async def calculate(logging, client, options, first_bill_id=None, last_bill_id=N
         else:
             end = input("Entrez l'id de la première facture : ")
             start = input("Entrez l'id de la dernière facture : ")
-            await check_many(channel, end, start)
+            await check_many(channel, start, end)
 
     print("----------------------------------------------------")
     print("Factures non valides : " + str(non_valid_bills))
