@@ -21,7 +21,10 @@ short_names_to_normal_prices = {
     "bp": 60,
     "bb": 240,
     "tg": 20,
-    "cs": 20
+    "cs": 20,
+    "cgn": 85,
+    "mo": 70,
+    "ra": 85
 }
 
 short_names_to_delivery_prices = {
@@ -45,7 +48,10 @@ short_names_to_delivery_prices = {
     "bp": 70,
     "bb": 280,
     "tg": 30,
-    "cs": 30
+    "cs": 30,
+    "cgn": 95,
+    "mo": 80,
+    "ra": 95
 }
 
 shorts_names_to_public_services_prices = {
