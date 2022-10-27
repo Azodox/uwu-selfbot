@@ -108,7 +108,7 @@ async def check_price(displayed_price: int, s: str):
                 else:
                     total_price = amount * int(short_names_to_normal_prices.get(item))
                 total += total_price
-                prime += 5 * amount
+                prime += 3 * amount
 
         if tenten is True and int(displayed_price) == 900:
             return {"value": True, "prime": prime}
