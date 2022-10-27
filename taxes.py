@@ -522,7 +522,7 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.columns_auto_resize(0, 25)
+    wks.columns_auto_resize(0, 30)
 
     sh.share("likemoi99@gmail.com", perm_type='user', role="writer", notify=False)
     sh.share("selim160706@gmail.com", perm_type='user', role="writer", notify=False)
