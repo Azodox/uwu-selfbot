@@ -2,17 +2,17 @@ import re
 
 short_names_to_normal_prices = {
     "cg": 70,
-    "cgv": 85,
-    "cgc": 85,
+    "cgv": 90,
+    "cgc": 90,
     "c": 60,
     "cd": 60,
     "ca": 70,
     "cl": 65,
     "a": 65,
     "m": 70,
-    "cc": 75,
-    "ch": 65,
-    "cr": 55,
+    "cc": 70,
+    "ch": 60,
+    "cr": 60,
     "mf": 60,
     "gfingsoif": 160,
     "chocochoco": 140,
@@ -22,25 +22,25 @@ short_names_to_normal_prices = {
     "bb": 240,
     "tg": 20,
     "cs": 20,
-    "cgn": 85,
-    "mo": 70,
-    "ra": 85
+    "cgn": 90,
+    "mo": 60,
+    "ra": 80
 }
 
 short_names_to_delivery_prices = {
     "cg": 80,
-    "cgv": 95,
-    "cgc": 95,
+    "cgv": 100,
+    "cgc": 100,
     "c": 70,
     "cd": 70,
     "ca": 80,
     "cl": 75,
     "a": 75,
     "m": 80,
-    "cc": 85,
-    "ch": 75,
+    "cc": 80,
+    "ch": 65,
     "cr": 65,
-    "mf": 70,
+    "mf": 65,
     "gfingsoif": 180,
     "chocochoco": 160,
     "lebonmatin": 135,
@@ -49,9 +49,9 @@ short_names_to_delivery_prices = {
     "bb": 280,
     "tg": 30,
     "cs": 30,
-    "cgn": 95,
-    "mo": 80,
-    "ra": 95
+    "cgn": 100,
+    "mo": 65,
+    "ra": 100
 }
 
 shorts_names_to_public_services_prices = {
