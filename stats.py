@@ -88,7 +88,7 @@ async def calculate(logging, client, options):
         result = await check.check_price(price, description)
         if result['value'] is True:
             print("Bill " + id + " is valid.")
-            print(get_products_stats_of_one_bill(description))
+            products_stats += print(get_products_stats_of_one_bill(description))
         else:
             continue
 
