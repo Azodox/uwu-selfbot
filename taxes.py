@@ -162,9 +162,10 @@ async def calculate(logging, client, options):
     bonus_total = conventional_bonus + exceptional_bonus
 
     all_purchases = purchases + vehicle_orders + int(total_tips * 0.25)
-    gross_profit = turnover - received_bills_total - bonus_total
+    profit = turnover - received_bills_total - bonus_total
     expenses = all_purchases + others + bonus_total
     employees_number = int(input("Entrez le nombre d'employés : "))
+    rock_share = profit * 0.1
 
     gc = gspread.service_account()
     sh = gc.create("CAPI - " + str(datetime.datetime.fromtimestamp(start).strftime("%d/%m/%Y")) + " à " + str(datetime.datetime.fromtimestamp(end).strftime("%d/%m/%Y")))
@@ -174,7 +175,7 @@ async def calculate(logging, client, options):
     wks = sh.get_worksheet(0)
 
     wks.update_acell('A2', 'Apports')
-    wks.update_acell('A8', 'Dépenses')
+    wks.update_acell('A5', 'Dépenses')
     # Chiffre d'affaires
     wks.update_acell('B2', 'Chiffre d\'affaires')
     wks.update_acell('C2', int(turnover))
@@ -191,36 +192,26 @@ async def calculate(logging, client, options):
     wks.update_acell('D4', "Pourboires versés à nos employés via les factures (utilisation fractionnée) ")
 
     # Total des primes
-    wks.update_acell('B8', 'Total des primes')
-    wks.update_acell('C8', int(bonus_total))
-    wks.update_acell('D8', "Primes versées aux employés (5$ par item vendu + 75% des pourboires) + primes exceptionnelles")
+    wks.update_acell('B5', 'Total des primes')
+    wks.update_acell('C5', int(bonus_total))
+    wks.update_acell('D5', "Primes versées aux employés (5$ par item vendu + 75% des pourboires) + primes exceptionnelles")
 
     # Achats + 25% des pourboires
-    wks.update_acell('B9', 'Achats')
-    wks.update_acell('C9', int(all_purchases))
-    wks.update_acell('D9', "Achats réalisés par l'entreprise (matière première, véhicules, 25% des pourboires pour la nourriture des employés)")
+    wks.update_acell('B6', 'Achats')
+    wks.update_acell('C6', int(all_purchases))
+    wks.update_acell('D6', "Achats réalisés par l'entreprise (matière première, véhicules, 25% des pourboires pour la nourriture des employés)")
 
     # Total des factures reçues
-    wks.update_acell('B12', 'Montant total des factures reçues avec taxes')
-    wks.update_acell('C12', int(received_bills_total))
-    wks.update_acell('D12', "Cumule des factures reçues au nom de l'entreprise (sortie de garage, réparations de véhicules de compagnie...)")
-
-    # Bénéfice brut
-    wks.update_acell('B19', 'Bénéfice brut')
-    wks.update_acell('C19', int(gross_profit))
-    wks.update_acell('D19', "Chiffre d'affaire-(dépenses avec taxes+primes)")
+    wks.update_acell('B7', 'Montant total des factures reçues avec taxes')
+    wks.update_acell('C7', int(received_bills_total))
+    wks.update_acell('D7', "Cumule des factures reçues au nom de l'entreprise (sortie de garage, réparations de véhicules de compagnie...)")
 
     # Montant des autres achats
-    wks.update_acell('B15', 'Montant des autres achats')
-    wks.update_acell('C15', int(others))
-    wks.update_acell('D15', "Montant total des achats exeptionnels de l'entreprise (évenements, publicité...)")
+    wks.update_acell('B8', 'Montant des autres achats')
+    wks.update_acell('C8', int(others))
+    wks.update_acell('D8', "Montant total des achats exeptionnels de l'entreprise (évenements, publicité...)")
 
     time.sleep(60)
-
-    # Nombre d'employés
-    wks.update_acell('B25', 'Nombre d\'employés')
-    wks.update_acell('C25', int(employees_number))
-    wks.update_acell('D25', "Nombre d'employé à fin de la periode indiquée")
 
     # Détail des factures
     wks.update_acell('F2', 'Détail des factures')
@@ -249,6 +240,18 @@ async def calculate(logging, client, options):
     wks.update_acell('G20', int(conventional_bonus))
     wks.update_acell('F21', 'Primes exceptionnelles')
     wks.update_acell('G21', int(exceptional_bonus))
+
+    # Nombre d'employés
+    wks.update_acell('F23', 'Nombre d\'employés')
+    wks.update_acell('G23', int(employees_number))
+
+    # Part de Rock
+    wks.update_acell('B33', 'Part de Rock')
+    wks.update_acell('C33', int(rock_share))
+
+    # Bénéfice net
+    wks.update_acell('B34', 'Bénéfice net')
+    wks.update_acell('C34', int(profit))
 
     wks.update_acell('D35', "POWERED BY C.A.P.I. & UWU'S CALC")
 
