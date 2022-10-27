@@ -2,6 +2,7 @@ from calendar import timegm
 import datetime
 import check
 import re
+from collections import Counter
 
 short_names_to_full_names = {
     "cg": "Café Glacé",
@@ -88,7 +89,7 @@ async def calculate(logging, client, options):
         result = await check.check_price(price, description)
         if result['value'] is True:
             print("Bill " + id + " is valid.")
-            products_stats += print(get_products_stats_of_one_bill(description))
+            products_stats = Counter(products_stats) + Counter(get_products_stats_of_one_bill(description))
         else:
             continue
 
