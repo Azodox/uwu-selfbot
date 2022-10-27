@@ -114,8 +114,6 @@ async def calculate(logging, client, options):
     first_bill_id = messages_bills_ids[len(messages_bills_ids) - 1]
 
     others = int(input("Entrez le montant des autres achats: "))
-    others_with_tax = others * 1.15
-    tax_on_others = others_with_tax - others
 
     purchases = 0
     async for purchase in purchases_channel.history(limit=5000):
@@ -155,7 +153,6 @@ async def calculate(logging, client, options):
                 supplies += int(re.search(r'\d+', embed.description).group())
 
     all_bonuses = await bonus.calculate(logging, client, options, first_bill_id, last_bill_id)
-    before_tx = turnover / 1.149975
 
     conventional_bonus = 0
     for b in all_bonuses:
@@ -165,25 +162,9 @@ async def calculate(logging, client, options):
     bonus_total = conventional_bonus + exceptional_bonus
 
     all_purchases = purchases + vehicle_orders + int(total_tips * 0.25)
-    purchases_with_tax = all_purchases * 1.15
-    tax_on_purchases = purchases_with_tax - all_purchases
-    received_bills_without_tax = received_bills_total / 1.149975
-    tax_on_received_bills = received_bills_total - received_bills_without_tax
-    gross_profit = turnover - purchases_with_tax - received_bills_total - bonus_total - others_with_tax
-    expenses = all_purchases + received_bills_without_tax + others + bonus_total
-    expenses_with_tax = purchases_with_tax + received_bills_total + others_with_tax + bonus_total
-    tax_on_expenses = tax_on_purchases + tax_on_others + tax_on_received_bills
-    perceived_taxes = before_tx * 0.15
-    paid_taxes = tax_on_received_bills + tax_on_purchases + tax_on_others
-    overpaid_taxes = perceived_taxes - paid_taxes
+    gross_profit = turnover - received_bills_total - bonus_total
+    expenses = all_purchases + others + bonus_total
     employees_number = int(input("Entrez le nombre d'employés : "))
-    management_cost_per_employee = int(input("Entrez les frais de gestion par employé : "))
-    management_cost = management_cost_per_employee * employees_number
-    overpaid_taxes_and_management_cost = overpaid_taxes + management_cost
-    gross_profit_before_taxes = gross_profit - overpaid_taxes_and_management_cost
-    tax_on_profit = gross_profit_before_taxes * 0.05
-    taxes = tax_on_profit + overpaid_taxes_and_management_cost
-    profit = gross_profit_before_taxes - taxes
 
     gc = gspread.service_account()
     sh = gc.create("CAPI - " + str(datetime.datetime.fromtimestamp(start).strftime("%d/%m/%Y")) + " à " + str(datetime.datetime.fromtimestamp(end).strftime("%d/%m/%Y")))
@@ -209,11 +190,6 @@ async def calculate(logging, client, options):
     wks.update_acell('C4', int(total_tips))
     wks.update_acell('D4', "Pourboires versés à nos employés via les factures (utilisation fractionnée) ")
 
-    # Avant les taxes
-    wks.update_acell('B6', 'Avant les taxes')
-    wks.update_acell('C6', int(before_tx))
-    wks.update_acell('D6', "Chiffre d'affaire/1.49975")
-
     # Total des primes
     wks.update_acell('B8', 'Total des primes')
     wks.update_acell('C8', int(bonus_total))
@@ -224,30 +200,10 @@ async def calculate(logging, client, options):
     wks.update_acell('C9', int(all_purchases))
     wks.update_acell('D9', "Achats réalisés par l'entreprise (matière première, véhicules, 25% des pourboires pour la nourriture des employés)")
 
-    # Achats avec taxes
-    wks.update_acell('B10', 'Achats avec taxes')
-    wks.update_acell('C10', int(purchases_with_tax))
-    wks.update_acell('D10', "Achats*1.15")
-
-    # Taxe sur les achats
-    wks.update_acell('B11', 'Taxe sur les achats')
-    wks.update_acell('C11', int(tax_on_purchases))
-    wks.update_acell('D11', "Achats avec taxes-Achats")
-
     # Total des factures reçues
     wks.update_acell('B12', 'Montant total des factures reçues avec taxes')
     wks.update_acell('C12', int(received_bills_total))
     wks.update_acell('D12', "Cumule des factures reçues au nom de l'entreprise (sortie de garage, réparations de véhicules de compagnie...)")
-
-    # Factures reçues avec taxes
-    wks.update_acell('B13', 'Factures reçues sans taxes')
-    wks.update_acell('C13', int(received_bills_without_tax))
-    wks.update_acell('D13', "Montant total des factures reçues/1.149975")
-
-    # Taxe sur les factures
-    wks.update_acell('B14', 'Taxe sur les factures')
-    wks.update_acell('C14', int(tax_on_received_bills))
-    wks.update_acell('D14', "Montant avec taxes-factures sans taxes")
 
     # Bénéfice brut
     wks.update_acell('B19', 'Bénéfice brut')
@@ -259,65 +215,12 @@ async def calculate(logging, client, options):
     wks.update_acell('C15', int(others))
     wks.update_acell('D15', "Montant total des achats exeptionnels de l'entreprise (évenements, publicité...)")
 
-    # Montant des autres achats avec taxes
-    wks.update_acell('B16', 'Montant des autres achats avec taxes')
-    wks.update_acell('C16', int(others_with_tax))
-    wks.update_acell('D16', "Montant des autres achats*1.15")
-
-    # Taxe sur les autres achats
-    wks.update_acell('B17', 'Taxe sur les autres achats')
-    wks.update_acell('C17', int(tax_on_others))
-    wks.update_acell('D17', "Montant des autres achats*-Montant total des autres achats")
-
-    # Taxes perçues
-    wks.update_acell('B21', 'Taxes perçues')
-    wks.update_acell('C21', int(perceived_taxes))
-    wks.update_acell('D21', "Chiffre d'affaire avant les taxes*0.15")
-
-    # Taxes payées
-    wks.update_acell('B22', 'Taxes payées')
-    wks.update_acell('C22', int(paid_taxes))
-    wks.update_acell('D22', "Cumule des taxes sur les dépenses")
-
-    # Taxes en trop
-    wks.update_acell('B23', 'Taxes en trop')
-    wks.update_acell('C23', int(overpaid_taxes))
-    wks.update_acell('D23', "Différence entre les taxes perçues et les taxes payées")
-
     time.sleep(60)
 
     # Nombre d'employés
     wks.update_acell('B25', 'Nombre d\'employés')
     wks.update_acell('C25', int(employees_number))
     wks.update_acell('D25', "Nombre d'employé à fin de la periode indiquée")
-
-    # Frais de gestion par employé
-    wks.update_acell('B26', 'Frais de gestion')
-    wks.update_acell('C26', int(management_cost))
-    wks.update_acell('D26', "Nombre d'employés*frais de géstion pour un employé (" + str(management_cost_per_employee) + "$)")
-
-    # Taxes en trop et frais de gestion
-    wks.update_acell('B28', 'Taxes en trop et frais de gestion')
-    wks.update_acell('C28', int(overpaid_taxes_and_management_cost))
-    wks.update_acell('D28', "Taxes perçues en trop + frais de gestion")
-
-    # Bénéfice brut avant taxes
-    wks.update_acell('B29', 'Bénéfice brut avant taxes')
-    wks.update_acell('C29', int(gross_profit_before_taxes))
-    wks.update_acell('D29', "Bénéfice brut-Taxes en trop et frais de gestion")
-
-    # Taxe sur le bénéfice brut
-    wks.update_acell('B30', 'Taxe sur le bénéfice brut')
-    wks.update_acell('C30', int(tax_on_profit))
-    wks.update_acell('D30', "Bénéfice but*0.05")
-
-    # Impôts à remettre
-    wks.update_acell('B33', 'Impôts à remettre')
-    wks.update_acell('C33', int(taxes) if taxes > 0 else int(management_cost))
-
-    # Bénéfice net
-    wks.update_acell('B34', 'Bénéfice net')
-    wks.update_acell('C34', int(profit))
 
     # Détail des factures
     wks.update_acell('F2', 'Détail des factures')
@@ -339,10 +242,6 @@ async def calculate(logging, client, options):
     wks.update_acell('F14', 'Résumé des dépenses')
     wks.update_acell('F15', 'Toutes les dépenses')
     wks.update_acell('G15', int(expenses))
-    wks.update_acell('F16', 'Toutes les dépenses avec taxes')
-    wks.update_acell('G16', int(expenses_with_tax))
-    wks.update_acell('F17', 'Taxes sur les dépenses')
-    wks.update_acell('G17', int(tax_on_expenses))
 
     # Détail des primes
     wks.update_acell('F19', 'Détail des primes')
@@ -784,7 +683,6 @@ async def calculate(logging, client, options):
 
     sh.share("likemoi99@gmail.com", perm_type='user', role="writer", notify=False)
     sh.share("selim160706@gmail.com", perm_type='user', role="writer", notify=False)
-    sh.share("nuclearfrog666@gmail.com", perm_type='user', role="writer", notify=False)
 
     print("\nGénération terminée !")
     print("Voici l'url vers la feuille Google : " + sh.url)
