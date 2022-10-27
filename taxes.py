@@ -246,12 +246,12 @@ async def calculate(logging, client, options):
     wks.update_acell('G23', int(employees_number))
 
     # Part de Rock
-    wks.update_acell('B33', 'Part de Rock')
-    wks.update_acell('C33', int(rock_share))
+    wks.update_acell('B10', 'Part de Rock')
+    wks.update_acell('C10', int(rock_share))
 
     # Bénéfice net
-    wks.update_acell('B34', 'Bénéfice net')
-    wks.update_acell('C34', int(profit))
+    wks.update_acell('B11', 'Bénéfice net')
+    wks.update_acell('C11', int(profit))
 
     wks.update_acell('D35', "POWERED BY C.A.P.I. & UWU'S CALC")
 
@@ -346,19 +346,14 @@ async def calculate(logging, client, options):
 
     pink = {"red": colors.to_rgb("#ea9999")[0], "green": colors.to_rgb("#ea9999")[1], "blue": colors.to_rgb("#ea9999")[2]}
 
-    wks.format("A8", {
+    wks.format("A5", {
         "backgroundColor": pink
     })
 
-    wks.format("B8:C17", {
+    wks.format("B5:C8", {
         "backgroundColor": pink
     })
 
-    wks.format("A31:D31", {
-        "borders": {
-            "top": default_border
-        }
-    })
 
     wks.format("A4", {
         "borders": {
@@ -385,66 +380,7 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("B10:D10", {
-        "borders": {
-            "bottom": None,
-            "top": None
-        }
-    })
-
-    wks.format("B13:D13", {
-        "borders": {
-            "bottom": None,
-            "top": None
-        }
-    })
-
-    wks.format("B16:D16", {
-        "borders": {
-            "bottom": None,
-            "top": None
-        }
-    })
-
-    wks.format("A17:D17", {
-        "borders": {
-            "bottom": default_border
-        }
-    })
-
-    wks.format("B22:D22", {
-        "borders": {
-            "bottom": None,
-            "top": None
-        }
-    })
-
-    wks.format("B25:D25", {
-        "borders": {
-            "bottom": None
-        }
-    })
-
-    wks.format("B29:D29", {
-        "borders": {
-            "bottom": None,
-            "top": None
-        }
-    })
-
     wks.format("B2:D2", {
-        "borders": {
-            "bottom": None
-        }
-    })
-
-    wks.format("B21:D21", {
-        "borders": {
-            "bottom": None
-        }
-    })
-
-    wks.format("B28:D28", {
         "borders": {
             "bottom": None
         }
@@ -471,72 +407,15 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("B15:D15", {
-        "borders": {
-            "top": thin_border,
-            "bottom": None
-        }
-    })
-
-    wks.format("B21:D21", {
-        "borders": {
-            "top": thin_border,
-            "bottom": None
-        }
-    })
-
-    wks.format("B28:D28", {
-        "borders": {
-            "top": thin_border,
-            "bottom": None
-        }
-    })
-
     wks.format("E2:E30", {
         "borders": {
             "left": default_border
         }
     })
 
-    wks.format("A2:A30", {
+    wks.format("A2:A8", {
         "borders": {
             "right": default_border,
-        }
-    })
-
-    wks.format("C33", {
-        "borders": {
-            "left": thin_border,
-            "right": default_border,
-            "top": default_border,
-            "bottom": thin_border
-        }
-    })
-
-    wks.format("C34", {
-        "borders": {
-            "left": thin_border,
-            "right": default_border,
-            "top": thin_border,
-            "bottom": default_border
-        }
-    })
-
-    wks.format("B33", {
-        "borders": {
-            "left": default_border,
-            "right": thin_border,
-            "top": default_border,
-            "bottom": thin_border
-        }
-    })
-
-    wks.format("B34", {
-        "borders": {
-            "left": default_border,
-            "right": thin_border,
-            "top": thin_border,
-            "bottom": default_border
         }
     })
 
@@ -551,19 +430,6 @@ async def calculate(logging, client, options):
         "borders": {
             "top": default_border,
             "right": default_border
-        }
-    })
-
-    wks.format("A18", {
-        "borders": {
-            "top": default_border,
-            "right": default_border
-        }
-    })
-
-    wks.format("A31", {
-        "borders": {
-            "top": default_border
         }
     })
 
