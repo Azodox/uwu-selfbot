@@ -379,13 +379,6 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("B9:D9", {
-        "borders": {
-            "top": None,
-            "bottom": None
-        }
-    })
-
     wks.format("E2:E8", {
         "borders": {
             "left": default_border
