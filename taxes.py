@@ -255,8 +255,6 @@ async def calculate(logging, client, options):
 
     wks.update_acell('D35', "POWERED BY C.A.P.I. & UWU'S CALC")
 
-    wks.columns_auto_resize(0, 25)
-
     default_border = {"style": "SOLID_MEDIUM"}
     thin_border = {"style": "SOLID"}
 
@@ -388,7 +386,7 @@ async def calculate(logging, client, options):
         }
     })
 
-    wks.format("E2:E30", {
+    wks.format("E2:E8", {
         "borders": {
             "left": default_border
         }
@@ -530,6 +528,8 @@ async def calculate(logging, client, options):
             "bottom": default_border
         }
     })
+
+    wks.columns_auto_resize(0, 25)
 
     sh.share("likemoi99@gmail.com", perm_type='user', role="writer", notify=False)
     sh.share("selim160706@gmail.com", perm_type='user', role="writer", notify=False)
