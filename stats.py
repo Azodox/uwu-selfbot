@@ -140,6 +140,7 @@ def get_products_stats_of_one_bill(s):
                     products_stats[item] += amount
                 else:
                     products_stats.__setitem__(item, amount)
+        return products_stats
     except:
         print("Found a bill with invalid declaration, skipping...")
         return products_stats
