@@ -4,6 +4,7 @@ import check
 import re
 import gspread
 from collections import Counter
+import time
 
 short_names_to_full_names = {
     "cg": "Café Glacé",
@@ -21,7 +22,15 @@ short_names_to_full_names = {
     "mf": "Muffin",
     "cgn": "Café Glacé Noisette",
     "mo": "Mochi",
-    "ra": "Ramen"
+    "ra": "Ramen",
+    "bb": "Booster Box",
+    "bp": "Booster Pack",
+    "tg": "Thé Glacé",
+    "gfingsoif": "gfingfsoif",
+    "chocochoco": "chocochoco",
+    "lebonmatin": "lebonmatin",
+    "mac": "mac and cheese",
+    "cs": "packet de chips"
 }
 
 sold_quantity_per_product = {}
@@ -43,12 +52,12 @@ async def calculate(logging, client, options):
             channel = ch
 
     if channel is None:
-        logging.error("Channel not found")
+        logging.error("erreur de login")
         exit(1)
 
     bills = []
     bills_done_ids = []
-    async for message in channel.history(limit=int(5000)):
+    async for message in channel.history(limit=int(100000)):
         if start <= timegm(message.created_at.utctimetuple()) <= end:
             for embed in message.embeds:
                 if embed.title != "Facture payée":
@@ -93,8 +102,8 @@ async def calculate(logging, client, options):
             products_stats = Counter(products_stats) + Counter(get_products_stats_of_one_bill(description))
         else:
             continue
-
-    create_spreadsheet(products_stats)
+    print(products_stats)
+    create_spreadsheet(start, end, products_stats)
 
 
 def get_products_stats_of_one_bill(s):
@@ -148,6 +157,15 @@ def get_products_stats_of_one_bill(s):
         return products_stats
 
 
-def create_spreadsheet(start, end, product_stats):
+def create_spreadsheet(start, end, products_stats):
     gc = gspread.service_account()
     sh = gc.create("CAPI Stats - " + str(datetime.datetime.fromtimestamp(start).strftime("%d/%m/%Y")) + " à " + str(datetime.datetime.fromtimestamp(end).strftime("%d/%m/%Y")))
+
+    print("attends je travail là")
+    wks = sh.get_worksheet(0)
+    for i in range(0, len(products_stats)):
+        product = list(products_stats)[i]
+        wks.update_acell('A' + str(i+1), short_names_to_full_names[product])
+        wks.update_acell('B' + str(i+1), products_stats[product])
+    sh.share("selim160706@gmail.com", perm_type='user', role="writer", notify=True)
+    print("c'est bon frère")
