@@ -2,6 +2,7 @@ from calendar import timegm
 import datetime
 import check
 import re
+import gspread
 from collections import Counter
 
 short_names_to_full_names = {
@@ -93,7 +94,7 @@ async def calculate(logging, client, options):
         else:
             continue
 
-    print(products_stats)
+    create_spreadsheet(products_stats)
 
 
 def get_products_stats_of_one_bill(s):
@@ -145,3 +146,8 @@ def get_products_stats_of_one_bill(s):
     except:
         print("Found a bill with invalid declaration, skipping...")
         return products_stats
+
+
+def create_spreadsheet(start, end, product_stats):
+    gc = gspread.service_account()
+    sh = gc.create("CAPI Stats - " + str(datetime.datetime.fromtimestamp(start).strftime("%d/%m/%Y")) + " à " + str(datetime.datetime.fromtimestamp(end).strftime("%d/%m/%Y")))
