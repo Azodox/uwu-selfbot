@@ -114,9 +114,6 @@ def get_products_stats_of_one_bill(s):
     public_service = False
     tenten = False
 
-    total = 0
-    prime = 0
-
     brackets_options = re.findall(r'\[(.*?)\]', s)
     if brackets_options is not None:
         for option in brackets_options:
