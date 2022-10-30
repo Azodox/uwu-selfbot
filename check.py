@@ -62,7 +62,7 @@ shorts_names_to_public_services_prices = {
 }
 
 
-async def check_price(displayed_price: int, s: str):
+async def check_price(displayed_price: int, s: str, ignore_price: bool = False):
     delivery = False
     discount = False
     public_service = False
@@ -110,15 +110,19 @@ async def check_price(displayed_price: int, s: str):
                 total += total_price
                 prime += 3 * amount
 
-        if tenten is True and int(displayed_price) == 900:
-            return {"value": True, "prime": prime}
+        if not ignore_price:
+            if tenten is True and int(displayed_price) == 900:
+                return {"value": True, "prime": prime}
 
-        if int(displayed_price) == (int(total + int(tip)) if discount is False else int(int(total * 0.9) + int(tip))):
-            if tip != 0:
-                prime += int(int(tip) * 0.75)
-            return {"value": True, "prime": prime}
+            if int(displayed_price) == (
+            int(total + int(tip)) if discount is False else int(int(total * 0.9) + int(tip))):
+                if tip != 0:
+                    prime += int(int(tip) * 0.75)
+                return {"value": True, "prime": prime}
+            else:
+                return {"value": False, "prime": 0}
         else:
-            return {"value": False, "prime": 0}
+            return {"value": True, "prime": prime}
     except:
         print("Found a bill with invalid declaration, skipping...")
         return {"value": False, "prime": 0}
