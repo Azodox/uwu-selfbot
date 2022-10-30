@@ -96,7 +96,7 @@ async def calculate(logging, client, options):
         price = int(bill['price'])
         description = bill['description']
 
-        result = await check.check_price(price, description)
+        result = await check.check_price(price, description, True)
         if result['value'] is True:
             print("Bill " + id + " is valid.")
             products_stats = Counter(products_stats) + Counter(get_products_stats_of_one_bill(description))
@@ -164,5 +164,6 @@ def create_spreadsheet(start, end, products_stats):
         product = list(products_stats)[i]
         wks.update_acell('A' + str(i+1), short_names_to_full_names[product])
         wks.update_acell('B' + str(i+1), products_stats[product])
-    sh.share("selim160706@gmail.com", perm_type='user', role="writer", notify=True)
+    sh.share("selim160706@gmail.com", perm_type='user', role="writer", notify=False)
+    sh.share("likemoi99@gmail.com", perm_type='user', role="writer", notify=False)
     print("c'est bon frère")
