@@ -10,7 +10,7 @@ import matplotlib.colors as colors
 async def calculate(logging, client, options):
     start = timegm(datetime.datetime.strptime(input("Entrez la première date (dd/mm/yyyy): "), "%d/%m/%Y").utctimetuple())
     end = timegm(datetime.datetime.strptime(input("Entrez la deuxième date (dd/mm/yyyy): "), "%d/%m/%Y").utctimetuple())
-
+    tortue=int(input("dis moi combien de choses je vais devoir calculer"))
     if start > end:
         print("La première date est postérieure à la deuxième")
         return
@@ -43,7 +43,7 @@ async def calculate(logging, client, options):
     received_bills_total = 0
     received_bills = []
 
-    async for message in channel.history(limit=5000):
+    async for message in channel.history(limit=tortue):
         if start <= timegm(message.created_at.utctimetuple()) <= end:
             for embed in message.embeds:
                 if embed.title != "Facture reçus":
@@ -65,7 +65,7 @@ async def calculate(logging, client, options):
     messages_bills_ids = []
     delivery_bills_total = 0
     normal_bills_total = 0
-    async for message in channel.history(limit=5000):
+    async for message in channel.history(limit=tortue):
         if start <= timegm(message.created_at.utctimetuple()) <= end:
             for embed in message.embeds:
                 if embed.title != "Facture payée":
@@ -116,7 +116,7 @@ async def calculate(logging, client, options):
     others = int(input("Entrez le montant des autres achats: "))
 
     purchases = 0
-    async for purchase in purchases_channel.history(limit=5000):
+    async for purchase in purchases_channel.history(limit=tortue):
 
         if start <= timegm(purchase.created_at.utctimetuple()) <= end:
             for embed in purchase.embeds:
@@ -135,7 +135,7 @@ async def calculate(logging, client, options):
                 purchases += cost
 
     vehicle_orders = 0
-    async for vehicle_order in vehicle_order_channel.history(limit=5000):
+    async for vehicle_order in vehicle_order_channel.history(limit=tortue):
         if start <= timegm(vehicle_order.created_at.utctimetuple()) <= end:
             for embed in vehicle_order.embeds:
                 if embed.title != "Commande passée":
@@ -144,7 +144,7 @@ async def calculate(logging, client, options):
                 vehicle_orders += int(re.search(r'\d+', embed.description).group())
 
     supplies = 0
-    async for transactions in account_channel.history(limit=5000):
+    async for transactions in account_channel.history(limit=tortue):
         if start <= timegm(transactions.created_at.utctimetuple()) <= end:
             for embed in transactions.embeds:
                 if embed.title != "Dépot d'argent":
