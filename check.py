@@ -4,7 +4,7 @@ short_names_to_normal_prices = {
     "cg": 70,
     "cgv": 90,
     "cgc": 90,
-    "c": 60,
+    "c": 30,
     "cd": 60,
     "ca": 70,
     "cl": 65,
@@ -24,14 +24,14 @@ short_names_to_normal_prices = {
     "cs": 20,
     "cgn": 90,
     "mo": 60,
-    "ra": 80
+    "ra": 35
 }
 
 short_names_to_delivery_prices = {
     "cg": 80,
     "cgv": 100,
     "cgc": 100,
-    "c": 70,
+    "c": 40,
     "cd": 70,
     "ca": 80,
     "cl": 75,
@@ -51,7 +51,7 @@ short_names_to_delivery_prices = {
     "cs": 30,
     "cgn": 100,
     "mo": 65,
-    "ra": 100
+    "ra": 50
 }
 
 shorts_names_to_public_services_prices = {
@@ -108,7 +108,7 @@ async def check_price(displayed_price: int, s: str, ignore_price: bool = False):
                 else:
                     total_price = amount * int(short_names_to_normal_prices.get(item))
                 total += total_price
-                prime += 3 * amount
+                prime += 10 * amount
 
         if not ignore_price:
             if tenten is True and int(displayed_price) == 900:
