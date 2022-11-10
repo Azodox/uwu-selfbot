@@ -158,7 +158,7 @@ def create_spreadsheet(start, end, products_stats):
     gc = gspread.service_account()
     sh = gc.create("CAPI Stats - " + str(datetime.datetime.fromtimestamp(start).strftime("%d/%m/%Y")) + " à " + str(datetime.datetime.fromtimestamp(end).strftime("%d/%m/%Y")))
 
-    print("attends je travail là")
+    print("Veuillez patienter, nous calculons.")
     wks = sh.get_worksheet(0)
     for i in range(0, len(products_stats)):
         product = list(products_stats)[i]
@@ -166,4 +166,4 @@ def create_spreadsheet(start, end, products_stats):
         wks.update_acell('B' + str(i+1), products_stats[product])
     sh.share("selim160706@gmail.com", perm_type='user', role="writer", notify=False)
     sh.share("likemoi99@gmail.com", perm_type='user', role="writer", notify=False)
-    print("c'est bon frère")
+    print("FINITO")

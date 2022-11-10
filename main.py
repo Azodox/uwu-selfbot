@@ -17,7 +17,7 @@ with open('config.json') as config_file:
 
 
 async def main():
-    mode = input("Voulez-vous calculer les taxes ou les primes ou les résultats de la voiture ? (taxes/primes/voiture/stats) ")
+    mode = input("Voulez-vous calculer les taxes, les primes, les résultats de la voiture ou les statistiques de la compagnie? (taxes/primes/voiture/stats) ")
     if mode == "taxes":
         await taxes.calculate(logging, client, options)
 
