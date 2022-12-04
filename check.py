@@ -25,7 +25,7 @@ short_names_to_normal_prices = {
     "cgn": 90,
     "mo": 60,
     "ra": 35,
-    "tenten": 1000
+    "tenten_old": 1000
 }
 
 short_names_to_delivery_prices = {
@@ -67,7 +67,7 @@ async def check_price(displayed_price: int, s: str, ignore_price: bool = False):
     delivery = False
     discount = False
     public_service = False
-    tenten = False
+    tenten_old = False
 
     total = 0
     prime = 0
@@ -82,7 +82,7 @@ async def check_price(displayed_price: int, s: str, ignore_price: bool = False):
             elif option == "Service Public":
                 public_service = True
             elif option == "10-10":
-                tenten = True
+                tenten_old = True
 
     try:
         tip = 0
@@ -109,10 +109,10 @@ async def check_price(displayed_price: int, s: str, ignore_price: bool = False):
                 else:
                     total_price = amount * int(short_names_to_normal_prices.get(item))
                 total += total_price
-                prime += 10 * amount
+                prime += 25 * amount if item != "tenten" else 250 * amount
 
         if not ignore_price:
-            if tenten is True and int(displayed_price) == 900:
+            if tenten_old is True and int(displayed_price) == 900:
                 return {"value": True, "prime": prime}
 
             if int(displayed_price) == (
