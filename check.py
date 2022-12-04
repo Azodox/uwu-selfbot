@@ -24,7 +24,8 @@ short_names_to_normal_prices = {
     "cs": 20,
     "cgn": 90,
     "mo": 60,
-    "ra": 35
+    "ra": 35,
+    "tenten": 1000
 }
 
 short_names_to_delivery_prices = {
